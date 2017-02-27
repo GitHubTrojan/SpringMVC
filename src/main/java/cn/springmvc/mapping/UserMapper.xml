@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.springmvc.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="cn.springmvc.model.User">
+        <id column="uid" jdbcType="INTEGER" property="uid" />
+        <result column="uname" jdbcType="VARCHAR" property="uname" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        uid, uname
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where uid = #{uid,jdbcType=INTEGER}
+    </select>
+</mapper>

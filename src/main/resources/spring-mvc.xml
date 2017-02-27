@@ -24,7 +24,8 @@
     <!-- 返回ResponseBody响应类型 -->
     <mvc:annotation-driven>
         <mvc:message-converters>
-            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+            <bean id="fastJsonHttpMessageConverter"
+                  class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
                 <property name="supportedMediaTypes">
                     <list>
                         <value>text/html;charset=UTF-8</value>
@@ -33,6 +34,15 @@
                     </list>
                 </property>
             </bean>
+            <!--<bean class="org.springframework.http.converter.StringHttpMessageConverter">-->
+                <!--<property name="supportedMediaTypes">-->
+                    <!--<list>-->
+                        <!--<value>text/html;charset=UTF-8</value>-->
+                        <!--<value>text/plain;charset=UTF-8</value>-->
+                        <!--<value>application/json;charset=UTF-8</value>-->
+                    <!--</list>-->
+                <!--</property>-->
+            <!--</bean>-->
         </mvc:message-converters>
     </mvc:annotation-driven>
 

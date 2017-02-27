@@ -1,6 +1,6 @@
 package cn.springmvc.base;
 
-//import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -9,40 +9,40 @@ import java.util.List;
  * Created by Vincent Wang
  * Version 1.0.0.
  */
-interface BaseService<Record, Example> {
+public interface BaseService<Record, Example> {
 
-//	int countByExample(Example example);
-//
-//	int deleteByExample(Example example);
-//
-//	int deleteByPrimaryKey(Integer id);
-//
-//	int insert(Record record);
-//
-//	int insertSelective(Record record);
-//
-//	List<Record> selectByExampleWithBLOBs(Example example);
-//
-//	List<Record> selectByExample(Example example);
-//
-//	Record selectFirstByExample(Example example);
-//
-//	Record selectByPrimaryKey(Integer id);
-//
-//	int updateByExampleSelective(@Param("record") Record record, @Param("example") Example example);
-//
-//	int updateByExampleWithBLOBs(@Param("record") Record record, @Param("example") Example example);
-//
-//	int updateByExample(@Param("record") Record record, @Param("example") Example example);
-//
-//	int updateByPrimaryKeySelective(Record record);
-//
-//	int updateByPrimaryKeyWithBLOBs(Record record);
-//
-//	int updateByPrimaryKey(Record record);
-//
-//	int deleteByPrimaryKeys(String ids);
-//
-//	void initMapper();
+	int countByExample(Example example);
+
+	int deleteByExample(Example example);
+
+	int deleteByPrimaryKey(Integer id);
+
+	int insert(Record record);
+
+	int insertSelective(Record record);
+
+	List<Record> selectByExampleWithBLOBs(Example example);
+
+	List<Record> selectByExample(Example example);
+
+	Record selectFirstByExample(Example example);
+
+	Record selectByPrimaryKey(Integer id);
+
+	int updateByExampleSelective(@Param("record") Record record, @Param("example") Example example);
+
+	int updateByExampleWithBLOBs(@Param("record") Record record, @Param("example") Example example);
+
+	int updateByExample(@Param("record") Record record, @Param("example") Example example);
+
+	int updateByPrimaryKeySelective(Record record);
+
+	int updateByPrimaryKeyWithBLOBs(Record record);
+
+	int updateByPrimaryKey(Record record);
+
+	int deleteByPrimaryKeys(String ids);
+
+	void initMapper();
 
 }
