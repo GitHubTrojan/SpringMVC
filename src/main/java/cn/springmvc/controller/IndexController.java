@@ -21,19 +21,34 @@ import java.util.HashMap;
 @Controller
 @RequestMapping("/index")
 public class IndexController extends BaseController{
+
     @Resource(name = "loginService")
     private LoginService loginService;
+
     @RequestMapping("/index")
     @ResponseBody
     public Object index(@RequestParam("uid") int uid) {
 //        ModelAndView mv = new ModelAndView();
 //        mv.setViewName("index2");
 //        mv.addObject("title", "first page of intellij idea.");
-        Map<String, Object> data = new HashMap<String, Object>();
+        Map<String, Object> data = new HashMap<>();
         User user = loginService.selectByPrimaryKey(uid);
         data.put("user", user == null? "I'm sorry, no user has been found." : user);
 //        mv.addObject("content", user);
 //        System.out.println(user);
         return data;
+    }
+    @RequestMapping("/index2")
+    @ResponseBody
+    public String index2(@RequestParam("uid") int uid) {
+//        ModelAndView mv = new ModelAndView();
+//        mv.setViewName("index2");
+//        mv.addObject("title", "first page of intellij idea.");
+//        Map<String, Object> data = new HashMap<String, Object>();
+//        User user = loginService.selectByPrimaryKey(uid);
+//        data.put("user", user == null? "I'm sorry, no user has been found." : user);
+//        mv.addObject("content", user);
+//        System.out.println(user);
+        return "测试";
     }
 }
