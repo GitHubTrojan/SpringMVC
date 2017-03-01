@@ -1,8 +1,16 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Vincent
+  Date: 2017/3/1
+  Time: 10:59
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-    <head>
-        <meta charset="utf-8">
-    </head>
+<head>
+    <title>welcome page</title>
+</head>
 <body>
-<h2>测试</h2>
+    it is a welcome page of a SpringMVC project. 你好
 </body>
 </html>

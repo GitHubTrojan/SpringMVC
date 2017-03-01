@@ -18,8 +18,8 @@
     <!-- 自动扫描 -->
     <context:component-scan base-package="cn.springmvc" />
 
-    <!-- 启动时初始化Spring上下文环境工具类 -->
-    <bean id="springContextUtil" class="cn.springmvc.util.SpringContextUtil"></bean>
+    <!--&lt;!&ndash; 启动时初始化Spring上下文环境工具类 &ndash;&gt;-->
+    <!--<bean id="springContextUtil" class="cn.springmvc.util.SpringContextUtil"></bean>-->
 
     <!-- 引入配置文件 -->
     <bean id="propertyConfigurer"
@@ -66,9 +66,9 @@
 
     <!-- 声明使用注解式事务 -->
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
-    <aop:aspectj-autoproxy proxy-target-class="true" />
-    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
-    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" />
+    <!--<aop:aspectj-autoproxy proxy-target-class="true" />-->
+    <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />-->
+    <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" />-->
     <!-- 启动任务注解 -->
     <task:annotation-driven />
 </beans>
