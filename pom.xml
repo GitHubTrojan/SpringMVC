@@ -223,6 +223,13 @@
           <artifactId>mysql-connector-java</artifactId>
           <version>5.1.40</version>
       </dependency>
+
+      <!-- never used in springmvc just add it for netty programming test -->
+      <dependency>
+          <groupId>io.netty</groupId>
+          <artifactId>netty</artifactId>
+          <version>3.10.6.Final</version>
+      </dependency>
   </dependencies>
   <build>
     <finalName>SpringMVC</finalName>
