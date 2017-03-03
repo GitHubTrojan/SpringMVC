@@ -5,6 +5,8 @@ import cn.springmvc.model.User;
 import cn.springmvc.service.LoginService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -14,7 +16,9 @@ import java.util.List;
  * Description 登录操作实现类
  */
 @Service("loginService")
+@Transactional(propagation = Propagation.REQUIRED, readOnly = true, rollbackFor = Exception.class)
 public class LoginServiceImpl implements LoginService {
+
     @Resource(name = "userMapper")
     private UserMapper userMapper;
 
@@ -81,8 +85,19 @@ public class LoginServiceImpl implements LoginService {
     }
 
     public void initMapper() {}
+
     @Override
+    @Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
     public User selectByPrimaryKey(int uid) {
         return userMapper.selectByPrimaryKey(uid);
+    }
+
+    @Transactional(readOnly = false)
+    public int updateByPrimaryKey(User user) {
+        int result = userMapper.updateByPrimaryKey(user);
+        System.out.println("service ：\t" + userMapper.selectByPrimaryKey(user.getUid()).getUname());
+        if (result == 1)
+        throw new IllegalArgumentException("DIY error.");
+        return result;
     }
 }

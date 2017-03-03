@@ -10,4 +10,5 @@ import cn.springmvc.model.User;
  */
 public interface LoginService extends BaseService {
     User selectByPrimaryKey(int uid);
+    int updateByPrimaryKey(User user);
 }

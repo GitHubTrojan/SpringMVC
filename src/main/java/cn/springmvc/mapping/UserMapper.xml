@@ -12,7 +12,10 @@
             resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from user
+        from users
         where uid = #{uid,jdbcType=INTEGER}
     </select>
+    <update id="updateByPrimaryKey" parameterType="cn.springmvc.model.User">
+        UPDATE users SET uname = #{uname,jdbcType=VARCHAR} where uid = #{uid,jdbcType=INTEGER}
+    </update>
 </mapper>

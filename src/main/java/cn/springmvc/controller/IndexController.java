@@ -45,10 +45,27 @@ public class IndexController extends BaseController{
 //        mv.setViewName("index2");
 //        mv.addObject("title", "first page of intellij idea.");
 //        Map<String, Object> data = new HashMap<String, Object>();
-//        User user = loginService.selectByPrimaryKey(uid);
+        User user = loginService.selectByPrimaryKey(uid);
 //        data.put("user", user == null? "I'm sorry, no user has been found." : user);
 //        mv.addObject("content", user);
-//        System.out.println(user);
+        System.out.println("查询到的用户名：\t" + user.getUname());
+        user.setUname("Vincent Wang Only");
+//        try {
+//            int result = 0;
+//            result = loginService.updateByPrimaryKey(user);
+//        } catch (IllegalArgumentException e) {
+//
+//        } finally {
+//            User user1 = loginService.selectByPrimaryKey(uid);
+//            System.out.println("查询到的用户名：\t" + user1.getUname());
+//        }
+
+            int result = 0;
+            result = loginService.updateByPrimaryKey(user);
+
+            User user1 = loginService.selectByPrimaryKey(uid);
+            System.out.println("查询到的用户名：\t" + user1.getUname());
+
         return "测试";
     }
 }
