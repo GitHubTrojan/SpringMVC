@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:amq="http://activemq.apache.org/schema/core"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/jms
+        http://www.springframework.org/schema/jms/spring-jms.xsd
+        http://activemq.apache.org/schema/core
+        http://activemq.apache.org/schema/core/activemq-core-5.14.3.xsd">
+    <context:component-scan base-package="cn.springmvc.demo.activemq" />
+    <mvc:annotation-driven />
+    <!-- ActiveMQ 的链接工厂 -->
+    <amq:connectionFactory  id="amqConnectionFactory" brokerURL="tcp://192.168.31.86:61616" userName="admin" password="admin"/>
+
+    <!-- Spring-JMS 的连接工厂 -->
+    <bean id="connectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+        <constructor-arg ref="amqConnectionFactory" />
+        <property name="sessionCacheSize" value="100" />
+    </bean>
+
+    <!-- 定义消息队列（Queue） -->
+    <bean id="queueDestination" class="org.apache.activemq.command.ActiveMQQueue">
+        <!-- Queue Name -->
+        <constructor-arg>
+            <value>cn.springmvc.demo.activemq</value>
+        </constructor-arg>
+    </bean>
+
+    <!-- 配置JMS模板（Queue），使用Spring提供的JMS工具类，发送、接收消息。 -->
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="defaultDestination" ref="queueDestination" />
+        <property name="receiveTimeout" value="10000" />
+        <!-- true是topic，false是queue，默认是false，此处显示写出false -->
+        <property name="pubSubDomain" value="false" />
+    </bean>
+    <jms:annotation-driven />
+</beans>

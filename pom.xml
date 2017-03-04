@@ -64,19 +64,43 @@
           <version>1.0</version>
       </dependency>
 
-        <!--<dependency>-->
-          <!--<groupId>org.springframework</groupId>-->
-          <!--<artifactId>spring-aspects</artifactId>-->
-          <!--<version>4.3.6.RELEASE</version>-->
-        <!--</dependency>-->
-
-
         <dependency>
           <groupId>org.springframework</groupId>
           <artifactId>spring-aop</artifactId>
           <version>4.3.6.RELEASE</version>
         </dependency>
 
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-tx</artifactId>
+          <version>4.3.6.RELEASE</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-jdbc</artifactId>
+          <version>4.3.6.RELEASE</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-jms</artifactId>
+          <version>4.3.6.RELEASE</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.apache.xbean</groupId>
+          <artifactId>xbean-spring</artifactId>
+          <version>4.5</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.freemarker</groupId>
+          <artifactId>freemarker</artifactId>
+          <version>2.3.23</version>
+      </dependency>
+
+      <!-- AspectJ -->
       <dependency>
           <groupId>aspectj</groupId>
           <artifactId>aspectjrt</artifactId>
@@ -94,24 +118,6 @@
           <artifactId>cglib</artifactId>
           <version>3.2.4</version>
       </dependency>
-
-      <dependency>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-tx</artifactId>
-          <version>4.3.6.RELEASE</version>
-        </dependency>
-
-        <dependency>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-jdbc</artifactId>
-          <version>4.3.6.RELEASE</version>
-        </dependency>
-
-        <dependency>
-          <groupId>org.freemarker</groupId>
-          <artifactId>freemarker</artifactId>
-          <version>2.3.23</version>
-        </dependency>
 
       <!-- mybatis 核心包 -->
       <dependency>
@@ -229,6 +235,19 @@
           <groupId>io.netty</groupId>
           <artifactId>netty</artifactId>
           <version>3.10.6.Final</version>
+      </dependency>
+
+      <!-- ActiveMQ -->
+      <dependency>
+          <groupId>org.apache.activemq</groupId>
+          <artifactId>activemq-core</artifactId>
+          <version>5.7.0</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.apache.activemq</groupId>
+          <artifactId>activemq-pool</artifactId>
+          <version>5.14.3</version>
       </dependency>
   </dependencies>
   <build>
