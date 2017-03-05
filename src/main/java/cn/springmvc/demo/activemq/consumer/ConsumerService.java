@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * Description This is a demo Consumer Service achieved by ActiveMQ
  */
 @Service
-public class ConsumerService {
+public class  ConsumerService {
 
     @Resource(name="jmsTemplate")
     private JmsTemplate jmsTemplate;
