@@ -43,5 +43,5 @@
         <!-- true是topic，false是queue，默认是false，此处显示写出false -->
         <property name="pubSubDomain" value="false" />
     </bean>
-    <jms:annotation-driven />
+    <!--<jms:annotation-driven />-->
 </beans>
