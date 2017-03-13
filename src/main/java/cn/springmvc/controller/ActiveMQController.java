@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.TextMessage;
+import javax.jms.Topic;
 import javax.management.MBeanServerConnection;
 import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
@@ -31,9 +32,12 @@ import java.util.Date;
 public class ActiveMQController {
 
     private static final Logger logger = LoggerFactory.getLogger(ActiveMQController.class);
+
+    @Resource(name = "webTestTopicDestination")
+    private Topic webTestTopicDestination;
     //队列名
-    @Resource(name="queueDestination")
-    private Destination queueDestination;
+    @Resource(name="webTestQueueDestination")
+    private Destination webTestQueueDestination;
 
     //队列消息生产者
     @Resource(name="producerService")
@@ -62,7 +66,7 @@ public class ActiveMQController {
     public ModelAndView producer(@RequestParam("message") String message) {
         logger.info("============ send to jms ===========");
         ModelAndView mv = new ModelAndView();
-        producer.sendMessage(queueDestination, message);
+        producer.sendMessage(webTestQueueDestination, message);
         mv.setViewName("welcome-activemq");
         return mv;
     }
@@ -72,10 +76,46 @@ public class ActiveMQController {
         logger.info("========= receive message ============");
         ModelAndView mv = new ModelAndView();
 
-        TextMessage tm = consumer.receive(queueDestination);
+        TextMessage tm = consumer.receive(webTestQueueDestination);
         mv.addObject("textMessage", tm.getText());
 
         mv.setViewName("queue_receive");
+        return mv;
+    }
+
+    @RequestMapping(value="/topic_producer", method = RequestMethod.GET)
+    public ModelAndView topic_producer(){
+        logger.info("=============go topic_producer=================");
+
+        Date now = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time = dateFormat.format( now );
+        logger.info(time);
+
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("time", time);
+        mv.setViewName("jms_topic_producer");
+        return mv;
+    }
+
+    @RequestMapping(value="/topic_onsend",method=RequestMethod.POST)
+    public ModelAndView topic_producer(@RequestParam("message") String message) {
+        logger.info("============ send to jms topic producer. ===========");
+        ModelAndView mv = new ModelAndView();
+        producer.sendTopicMessage(webTestTopicDestination, message);
+        mv.setViewName("welcome-activemq-topic");
+        return mv;
+    }
+
+    @RequestMapping(value="/topic_receive",method = RequestMethod.GET)
+    public ModelAndView topic_receive() throws JMSException {
+        logger.info("========= receive message from Topic. ============");
+        ModelAndView mv = new ModelAndView();
+
+        TextMessage tm = consumer.receiveFromTopic(webTestTopicDestination);
+        mv.addObject("textMessage", tm.getText());
+
+        mv.setViewName("topic_receive");
         return mv;
     }
 

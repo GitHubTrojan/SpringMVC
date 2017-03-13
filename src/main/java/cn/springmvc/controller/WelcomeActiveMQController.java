@@ -24,4 +24,12 @@ public class WelcomeActiveMQController {
         mv.setViewName("welcome-activemq");
         return mv;
     }
+
+    @RequestMapping(value = "/welcome_", method = RequestMethod.GET)
+    public ModelAndView welcome_withTopic(){
+        logger.info("-------------Welcome to ActivcMQ and Spring JMS.-----------------");
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("welcome-activemq-topic");
+        return mv;
+    }
 }

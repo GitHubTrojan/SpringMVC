@@ -16,23 +16,38 @@ import org.springframework.stereotype.Service;
 @Service
 public class  ConsumerService {
 
-    @Resource(name="jmsTemplate")
-    private JmsTemplate jmsTemplate;
+    @Resource(name="jmsQueueTemplate")
+    private JmsTemplate jmsQueueTemplate;
+
+    @Resource(name="jmsTopicTemplate")
+    private JmsTemplate jmsTopicTemplate;
 
     /**
      * 接收消息
      */
     public TextMessage receive(Destination destination) {
-        TextMessage tm = (TextMessage) jmsTemplate.receive(destination);
+        TextMessage tm = (TextMessage) jmsQueueTemplate.receive(destination);
         try {
             System.out.println("从队列" + destination.toString() + "收到了消息：\t"
                     + tm.getText());
         } catch (JMSException e) {
             e.printStackTrace();
         }
-
         return tm;
+    }
 
+    /**
+     * 订阅主题，接收消息
+     */
+    public TextMessage receiveFromTopic(Destination destination) {
+        TextMessage tm = (TextMessage) jmsTopicTemplate.receive(destination);
+        try {
+            System.out.println("从队列" + destination.toString() + "收到了消息：\t"
+                    + tm.getText());
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
+        return tm;
     }
 
 }

@@ -2,7 +2,6 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:jms="http://www.springframework.org/schema/jms"
        xmlns:amq="http://activemq.apache.org/schema/core"
        xsi:schemaLocation="
@@ -10,38 +9,68 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd
-        http://www.springframework.org/schema/mvc
-        http://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/jms
         http://www.springframework.org/schema/jms/spring-jms.xsd
         http://activemq.apache.org/schema/core
         http://activemq.apache.org/schema/core/activemq-core-5.14.3.xsd">
+
+
+    <!--
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
     <context:component-scan base-package="cn.springmvc.demo.activemq" />
     <mvc:annotation-driven />
-    <!-- ActiveMQ 的链接工厂 -->
+
+        basic activemq need bean/context/jms as dependencies
+        and using context-component-scan
+        or an annotation on the class to enable the classes. -->
+
+    <!-- ActiveMQ 的连接工厂 -->
     <amq:connectionFactory  id="amqConnectionFactory" brokerURL="tcp://localhost:61616" userName="admin" password="admin"/>
 
     <!-- Spring-JMS 的连接工厂 -->
-    <bean id="connectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+    <bean id="jmsConnectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
         <constructor-arg ref="amqConnectionFactory" />
         <property name="sessionCacheSize" value="100" />
     </bean>
 
-    <!-- 定义消息队列（Queue） -->
-    <bean id="queueDestination" class="org.apache.activemq.command.ActiveMQQueue">
-        <!-- Queue Name -->
+    <!-- 消息处理器 -->
+    <bean id="jmsMessageConverter" class="org.springframework.jms.support.converter.SimpleMessageConverter" />
+
+    <!-- 开启生产者端的基本配置(Producer side start)-->
+    <!-- 配置JMS模板（Queue），使用Spring提供的JMS工具类，发送、接收消息。 -->
+    <bean id="jmsQueueTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="jmsConnectionFactory" />
+        <!-- true是topic，false是queue，默认是false，此处显示写出false -->
+        <property name="pubSubDomain" value="false" />
+        <property name="messageConverter" ref="jmsMessageConverter" />
+        <property name="receiveTimeout" value="10000" />
+    </bean>
+
+    <!-- 定义JmsTemplate的Topic类型 -->
+    <bean id="jmsTopicTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <constructor-arg ref="jmsConnectionFactory" />
+        <!-- pub/sub模型（发布/订阅） -->
+        <property name="pubSubDomain" value="true" />
+        <property name="messageConverter" ref="jmsMessageConverter"></property>
+    </bean>
+
+    <bean id="jmsListenerContainerFactory" class="org.springframework.jms.config.DefaultJmsListenerContainerFactory">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+    </bean>
+    <!-- 启动activemq 相关注解 -->
+    <jms:annotation-driven />
+    <!-- 定义一个队列一个订阅频道主题 -->
+    <bean id="webTestQueueDestination" class="org.apache.activemq.command.ActiveMQQueue">
         <constructor-arg>
-            <value>demoqueue</value>
+            <value>webTestQueueDestination</value>
         </constructor-arg>
     </bean>
 
-    <!-- 配置JMS模板（Queue），使用Spring提供的JMS工具类，发送、接收消息。 -->
-    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
-        <property name="connectionFactory" ref="connectionFactory" />
-        <property name="defaultDestination" ref="queueDestination" />
-        <property name="receiveTimeout" value="10000" />
-        <!-- true是topic，false是queue，默认是false，此处显示写出false -->
-        <property name="pubSubDomain" value="false" />
+    <bean id="webTestTopicDestination" class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg>
+            <value>webTestTopicDestination</value>
+        </constructor-arg>
     </bean>
-    <jms:annotation-driven />
 </beans>
